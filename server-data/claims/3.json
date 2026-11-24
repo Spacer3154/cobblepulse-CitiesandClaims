@@ -1,0 +1,32 @@
+{
+  "id": 3,
+  "owner": "7181ffcf-4d63-3b3a-9030-44bb86f53889",
+  "ownerName": "Alice",
+  "dimension": "minecraft:overworld",
+  "minX": 5002,
+  "minZ": 5002,
+  "maxX": 5006,
+  "maxZ": 5006,
+  "type": "PLAYER",
+  "parent": 1,
+  "inherit": true,
+  "trusted": {
+    "60657884-228f-3f3b-89a8-8144c53893cd": "BUILD"
+  },
+  "trustedNames": {
+    "60657884-228f-3f3b-89a8-8144c53893cd": "Carol"
+  },
+  "visitorFlags": {},
+  "memberFlags": {},
+  "staffFlags": [],
+  "commands": {
+    "mode": "FLAG",
+    "list": []
+  },
+  "settings": {
+    "weather": "CLEAR",
+    "time": 6000,
+    "level_cap": 50
+  },
+  "created": 1795534447282
+}

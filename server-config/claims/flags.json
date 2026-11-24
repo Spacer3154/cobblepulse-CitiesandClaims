@@ -1,0 +1,566 @@
+{
+  "block.break": {
+    "category": "A",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Casser des blocs standard dans le claim"
+  },
+  "block.place": {
+    "category": "A",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Poser des blocs standard dans le claim"
+  },
+  "block.trample": {
+    "category": "A",
+    "visitor": "DENY",
+    "member": "DENY",
+    "editable": true,
+    "description": "Piétiner les terres labourées et cultures"
+  },
+  "block.crop_harvest": {
+    "category": "A",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Récolter et replanter les cultures (blé, carottes, etc.)"
+  },
+  "block.bonemeal": {
+    "category": "A",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Utiliser de la poudre d'os sur les plantes et cultures"
+  },
+  "block.frost_walker": {
+    "category": "A",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Geler l'eau avec l'enchantement Semelles givrantes"
+  },
+  "block.brush_archaeology": {
+    "category": "A",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Utiliser un pinceau sur le sable/gravier suspect"
+  },
+  "fluid.water_place": {
+    "category": "A",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Placer ou récupérer de l'eau avec un seau"
+  },
+  "fluid.lava_place": {
+    "category": "A",
+    "visitor": "DENY",
+    "member": "DENY",
+    "editable": true,
+    "description": "Placer ou récupérer de la lave avec un seau"
+  },
+  "fluid.powder_snow": {
+    "category": "A",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Placer ou récupérer de la neige poudreuse"
+  },
+  "fluid.flow_in": {
+    "category": "A",
+    "visitor": "DENY",
+    "editable": true,
+    "description": "Autoriser les liquides extérieurs à couler dans le claim"
+  },
+  "piston.cross_border": {
+    "category": "A",
+    "visitor": "DENY",
+    "editable": true,
+    "description": "Autoriser les pistons à pousser/tirer des blocs à travers la frontière"
+  },
+  "container.chest_barrel": {
+    "category": "B",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Ouvrir coffres, tonneaux et coffres piégés"
+  },
+  "container.shulker": {
+    "category": "B",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Ouvrir les boîtes de Shulker posées"
+  },
+  "container.furnace_smelt": {
+    "category": "B",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Utiliser fours, hauts fourneaux, fumoirs et alambics"
+  },
+  "container.hopper_dropper": {
+    "category": "B",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Ouvrir entonnoirs, distributeurs et droppers"
+  },
+  "container.ender_chest": {
+    "category": "B",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Ouvrir un Coffre de l'Ender (Ender Chest)"
+  },
+  "interact.door_gate": {
+    "category": "B",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Ouvrir/fermer portes, trappes et portillons"
+  },
+  "interact.button_lever": {
+    "category": "B",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Activer boutons, leviers et plaques de pression"
+  },
+  "interact.note_jukebox": {
+    "category": "B",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Utiliser les blocs musicaux et jukebox (disques)"
+  },
+  "interact.bed_respawn": {
+    "category": "B",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Dormir dans un lit ou charger une ancre de réapparition"
+  },
+  "interact.anvil_enchant": {
+    "category": "B",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Utiliser enclumes, tables d'enchantement, meules, métiers"
+  },
+  "interact.beacon": {
+    "category": "B",
+    "visitor": "DENY",
+    "member": "DENY",
+    "editable": true,
+    "description": "Modifier les effets d'une balise (Beacon)"
+  },
+  "interact.sign_lectern": {
+    "category": "B",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Modifier les pancartes ou prendre un livre sur un pupitre"
+  },
+  "interact.item_frame_armorstand": {
+    "category": "B",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Tourner/retirer items des cadres et porte-armures"
+  },
+  "redstone.edit": {
+    "category": "B",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Modifier le délai des répéteurs, comparateurs et capteurs"
+  },
+  "entity.hurt_passive": {
+    "category": "C",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Attaquer/tuer les animaux passifs (vaches, moutons, abeilles)"
+  },
+  "entity.hurt_hostile": {
+    "category": "C",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Attaquer/tuer les monstres hostiles vanilla"
+  },
+  "entity.hurt_player": {
+    "category": "C",
+    "visitor": "DENY",
+    "member": "DENY",
+    "editable": true,
+    "description": "PvP physique direct entre joueurs dans le claim"
+  },
+  "entity.breed_feed": {
+    "category": "C",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Nourrir, accoupler ou tondre/traire les animaux"
+  },
+  "entity.leash_name": {
+    "category": "C",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Attacher une laisse ou utiliser une étiquette (Name Tag)"
+  },
+  "entity.villager_trade": {
+    "category": "C",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Échanger avec les villageois et marchands ambulants"
+  },
+  "vehicle.place_break": {
+    "category": "C",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Poser ou casser bateaux et wagonnets"
+  },
+  "vehicle.ride": {
+    "category": "C",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Monter dans un bateau, wagonnet ou sur un cheval/cochon"
+  },
+  "item.pickup": {
+    "category": "C",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Ramasser des objets au sol dans le claim"
+  },
+  "item.drop": {
+    "category": "C",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Jeter des objets au sol dans le claim"
+  },
+  "item.xp_pickup": {
+    "category": "C",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Absorber les orbes d'expérience au sol"
+  },
+  "env.explosion_block": {
+    "category": "D",
+    "visitor": "DENY",
+    "editable": true,
+    "description": "Dégâts aux blocs causés par les explosions (TNT, Creepers, lits)"
+  },
+  "env.explosion_entity": {
+    "category": "D",
+    "visitor": "DENY",
+    "editable": true,
+    "description": "Dégâts aux entités et Pokémon causés par les explosions"
+  },
+  "env.fire_ignite": {
+    "category": "D",
+    "visitor": "DENY",
+    "member": "DENY",
+    "editable": true,
+    "description": "Allumer un feu (briquet, boule de feu)"
+  },
+  "env.fire_spread": {
+    "category": "D",
+    "visitor": "DENY",
+    "editable": true,
+    "description": "Propagation naturelle du feu sur les blocs"
+  },
+  "env.ice_snow_melt": {
+    "category": "D",
+    "visitor": "ALLOW",
+    "editable": true,
+    "description": "Fonte naturelle de la glace et de la neige"
+  },
+  "env.leaf_decay": {
+    "category": "D",
+    "visitor": "ALLOW",
+    "editable": true,
+    "description": "Décomposition naturelle des feuilles d'arbres"
+  },
+  "move.enter_claim": {
+    "category": "D",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Autoriser les joueurs à entrer physiquement dans le claim"
+  },
+  "move.enderpearl": {
+    "category": "D",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Utiliser des perles de l'Ender pour entrer/se déplacer"
+  },
+  "move.chorus_fruit": {
+    "category": "D",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Téléportation via fruit de chorus dans le claim"
+  },
+  "command.execute": {
+    "category": "D",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Exécuter des commandes chat dans le claim (blocage total ou filtrage par liste dans l'écran)"
+  },
+  "move.elytra_flight": {
+    "category": "D",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Voler en Élytres au-dessus/dans le claim"
+  },
+  "env.mob_grief_blocks": {
+    "category": "D",
+    "visitor": "DENY",
+    "editable": true,
+    "description": "Autoriser les mobs à casser, ramasser ou poser des blocs (Endermen, Creepers, Ghasts, Ravagers, Silverfish)"
+  },
+  "env.mob_crop_trample": {
+    "category": "D",
+    "visitor": "DENY",
+    "editable": true,
+    "description": "Autoriser les mobs (animaux, monstres, villageois) à piétiner les cultures et récolter les champs"
+  },
+  "env.mob_door_break": {
+    "category": "D",
+    "visitor": "DENY",
+    "editable": true,
+    "description": "Autoriser les zombies et vindicateurs à casser les portes dans le claim"
+  },
+  "env.wither_dragon_grief": {
+    "category": "D",
+    "visitor": "DENY",
+    "editable": false,
+    "description": "Autoriser la destruction de blocs causée par le Wither ou l'Ender Dragon dans le claim"
+  },
+  "env.projectile_block_grief": {
+    "category": "D",
+    "visitor": "DENY",
+    "editable": true,
+    "description": "Autoriser les projectiles de mobs (boules de feu de Blaze/Ghast, crânes de Wither) à enflammer ou détruire des blocs"
+  },
+  "cobblemon.capture_wild": {
+    "category": "E",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Lancer des Poké Balls pour capturer des Pokémon sauvages"
+  },
+  "cobblemon.capture_shiny_legendary": {
+    "category": "E",
+    "visitor": "DENY",
+    "member": "DENY",
+    "editable": true,
+    "description": "Capturer spécifiquement les Pokémon Shiny, Légendaires ou Mythiques"
+  },
+  "cobblemon.battle_wild": {
+    "category": "E",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Engager un combat contre un Pokémon sauvage"
+  },
+  "cobblemon.battle_pvp": {
+    "category": "E",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Défier un autre joueur en combat Pokémon"
+  },
+  "cobblemon.hurt_wild": {
+    "category": "E",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Infliger des dégâts physiques (épée, arc, feu) aux Pokémon sauvages"
+  },
+  "cobblemon.hurt_owned": {
+    "category": "E",
+    "visitor": "DENY",
+    "member": "DENY",
+    "editable": true,
+    "description": "Infliger des dégâts physiques aux Pokémon appartenant à un joueur"
+  },
+  "cobblemon.projectile_knockback": {
+    "category": "E",
+    "visitor": "DENY",
+    "member": "DENY",
+    "editable": true,
+    "description": "Repousser les Pokémon avec des projectiles (flèches, boules de neige, canne à pêche)"
+  },
+  "cobblemon.machine_healer": {
+    "category": "E",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Utiliser les Healing Machines (soigneurs Pokémon)"
+  },
+  "cobblemon.machine_pc": {
+    "category": "E",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Utiliser les PC Cobblemon"
+  },
+  "cobblemon.machine_fossil": {
+    "category": "E",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Utiliser l'Analyseur de Fossiles et le Réservoir de Restauration"
+  },
+  "cobblemon.pasture_view": {
+    "category": "E",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Consulter l'interface des Pasture Blocks (Pâturages)"
+  },
+  "cobblemon.pasture_manage": {
+    "category": "E",
+    "visitor": "DENY",
+    "member": "DENY",
+    "editable": true,
+    "description": "Ajouter/retirer des Pokémon et récupérer les objets des Pâturages"
+  },
+  "cobblemon.apricorn_harvest": {
+    "category": "E",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Récolter les Noigrumes (Apricorns) et baies sur les arbres"
+  },
+  "cobblemon.berry_plant": {
+    "category": "E",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Planter des graines de baies et pousses de Noigrumes"
+  },
+  "cobblemon.npc_interact": {
+    "category": "E",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Interagir avec les PNJ Cobblemon (dresseurs, infirmières, marchands)"
+  },
+  "cobblemon.send_out_pokemon": {
+    "category": "E",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Sortir son Pokémon de sa Poké Ball dans la zone"
+  },
+  "cobblemon.ride": {
+    "category": "E",
+    "visitor": "ALLOW",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Chevaucher/utiliser une monture Pokémon dans la zone"
+  },
+  "cobblemon.poke_loot": {
+    "category": "E",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Ouvrir les Poké Loots (coffres Poké Ball) présents dans le claim"
+  },
+  "cobblemon.ranch_daycare": {
+    "category": "E",
+    "visitor": "DENY",
+    "member": "ALLOW",
+    "editable": true,
+    "description": "Ouvrir un Bloc de Pension de CobblePulse-Ranch (propriétaire du claim et joueurs ajoutés par /trust)"
+  },
+  "admin.wild_spawn": {
+    "category": "F",
+    "visitor": "ALLOW",
+    "editable": false,
+    "description": "Autoriser le spawn naturel des Pokémon sauvages dans le claim"
+  },
+  "admin.hostile_spawn": {
+    "category": "F",
+    "visitor": "ALLOW",
+    "editable": false,
+    "description": "Autoriser le spawn naturel des monstres hostiles vanilla"
+  },
+  "admin.passive_spawn": {
+    "category": "F",
+    "visitor": "ALLOW",
+    "editable": false,
+    "description": "Autoriser le spawn naturel des animaux passifs vanilla"
+  },
+  "admin.heal_on_entry": {
+    "category": "F",
+    "visitor": "DENY",
+    "editable": false,
+    "description": "Soigner automatiquement l'équipe Pokémon à l'entrée de la zone"
+  },
+  "admin.level_cap": {
+    "category": "F",
+    "visitor": "DENY",
+    "editable": false,
+    "description": "Appliquer un plafond de niveau Pokémon en combat (Arènes)"
+  },
+  "admin.pvp_arena": {
+    "category": "F",
+    "visitor": "DENY",
+    "editable": false,
+    "description": "Activer les règles de combat d'arène compétitive"
+  },
+  "admin.keep_inventory": {
+    "category": "F",
+    "visitor": "DENY",
+    "editable": false,
+    "description": "Conserver l'inventaire et l'XP en cas de mort dans le claim"
+  },
+  "admin.invulnerable_player": {
+    "category": "F",
+    "visitor": "DENY",
+    "editable": false,
+    "description": "Rendre les joueurs invulnérables aux dégâts dans la zone (Spawn)"
+  },
+  "admin.hunger_drain": {
+    "category": "F",
+    "visitor": "ALLOW",
+    "editable": false,
+    "description": "Activer ou désactiver la perte de faim dans la zone"
+  },
+  "admin.weather_lock": {
+    "category": "F",
+    "visitor": "DENY",
+    "editable": false,
+    "description": "Forcer une météo locale dans la zone (Clair / Pluie / Orage)"
+  },
+  "admin.time_lock": {
+    "category": "F",
+    "visitor": "DENY",
+    "editable": false,
+    "description": "Figer l'heure visuelle dans la zone (Jour / Nuit)"
+  },
+  "admin.fly_zone": {
+    "category": "F",
+    "visitor": "DENY",
+    "editable": false,
+    "description": "Autoriser le vol créatif/survie dans les limites du claim"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "economy": {
+    "interval_minutes": 30,
+    "blocks_per_interval": 150,
+    "initial_blocks": 500,
+    "max_accrued_blocks": 5000,
+    "afk_minutes": 5
+  },
+  "claims": {
+    "min_width": 5,
+    "min_area": 25,
+    "max_claims_per_player": 10,
+    "luckperms_max_claims_override": true,
+    "subclaim_min_width": 1,
+    "max_city_name_length": 32,
+    "give_tools_on_first_join": true,
+    "visual_seconds": 30,
+    "inspector_range": 128
+  },
+  "notifications": {
+    "enabled": true,
+    "fade_in_ticks": 8,
+    "stay_ticks": 40,
+    "fade_out_ticks": 12,
+    "wilderness": "Zone sauvage",
+    "subclaim_actionbar": true
+  },
+  "commands": {
+    "always_allowed": [
+      "claim",
+      "claims",
+      "trust",
+      "untrust",
+      "trustall",
+      "untrustall",
+      "trustlist",
+      "claimadmin",
+      "abandonclaim"
+    ]
+  },
+  "admin_zones": {
+    "heal_cooldown_seconds": 60,
+    "fly_fall_grace_seconds": 10,
+    "default_level_cap": 50,
+    "default_time": 6000,
+    "default_weather": "CLEAR"
+  },
+  "permissions": {
+    "op_level_fallback": 2
+  },
+  "sync": {
+    "render_radius": 160,
+    "map_discovery_required": true
+  },
+  "storage": {
+    "flush_delay_ms": 2000
+  }
+}

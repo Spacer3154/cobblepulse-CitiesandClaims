@@ -1,0 +1,42 @@
+mods client : ['Cobblemon-fabric-1.8.4+1.21.1.jar', 'cobblepulse-citiesandclaims-1.0.0.jar', 'cobblepulse-clans.jar', 'cobblepulse-ranch.jar', 'fabric-api-0.116.18+1.21.1.jar', 'fabric-language-kotlin-1.14.2+kotlin.2.4.21.jar', 'journeymap.jar', 'xaerominimap.jar', 'xaeroworldmap.jar']
+preparation du client : code 0
+serveur pret : True
+$ xvfb-run -n 98 -s -screen 0 1280x720x24 /usr/bin/python3 -m portablemc --main-dir /home/runner/work/cobblepulse-CitiesandClaims/cobblepulse-CitiesandClaims/run-prod-client --work-dir /home/runner/work/cobblepulse-CitiesandClaims/cobblepulse-CitiesandClaims/run-prod-client start -u ClaimsTest --resolution 1280x720 --jvm /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.13-9/x64/bin/java --jvm-args=-Xmx3G -Dcobblepulse_claims.livetest=true -s 127.0.0.1 -p 25565 fabric:1.21.1:0.19.5
+client termine (180 s)
+[15:36:53] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS outils_recus
+[15:36:53] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS sync_connecte - dim=minecraft:overworld
+[15:36:56] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS coin_a_repere
+[15:36:59] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS claim_cree_et_synchronise - 336
+[15:36:59] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS rendu_3d_actif - frames=958
+[15:37:05] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS touche_ouvre_gestion - fr.cobblepulse.claims.client.screen.ClaimManagerScreen@4fd8b87d
+[15:37:07] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS nom_de_ville_par_ecran - Ville renommée « Bourg-Palette ».
+[15:37:12] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS matrice_flag_modifie - ALLOW
+[15:37:14] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS sous_panneau_commandes
+[15:37:16] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS commandes_liste_noire
+[15:37:18] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS membres_trust_public
+[15:37:24] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS parcelle_creee
+[15:37:28] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS onglet_parcelles
+[15:37:30] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS rendu_3d_force_sans_outil
+[15:37:41] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS tableau_de_bord_nature - fr.cobblepulse.claims.client.screen.DashboardScreen@48146b74
+[15:37:41] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS luckperms_plafond_12000 - 12000
+[15:37:41] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS luckperms_palier_300 - 300
+[15:37:41] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS compte_a_rebours - 1701030
+[15:37:45] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS maj_touche_admin - fr.cobblepulse.claims.client.screen.AdminClaimsHubScreen@7bc1f0b1
+[15:37:47] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS admin_permissions_globales - fr.cobblepulse.claims.client.screen.AdminPermissionsConfigScreen@5c6871eb
+[15:37:53] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS bordure_synchronisee - 2880.0
+[15:37:57] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS teleport_hors_bordure_annulee - pos=(2030.5, 151.0, 2025.5)
+[15:37:59] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS decouverte_chunk_joueur - chunks decouverts=259
+[15:37:59] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS decouverte_regle_serveur - config sync.map_discovery_required
+[15:37:59] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS decouverte_formes_carte - erreurs=0 anneau=1/1
+[15:38:01] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS decouverte_masque_inexplore - x=2412
+[15:38:01] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS decouverte_visible_explore
+[15:38:01] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS decouverte_journeymap - masques=3 partiels=1 overlays=4
+[15:38:01] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS decouverte_revele
+[15:38:01] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS decouverte_sauvegarde - 260 -> 260
+[15:38:03] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS journeymap_overlays - pret=true overlays=5
+[15:38:03] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS xaero_surligneur - wm=1 mm=0
+[15:38:16] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS journeymap_plein_ecran - journeymap.client.ui.fullscreen.Fullscreen@72a3f07c
+[15:38:24] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS conversion_admin_synchronisee - ADMIN
+[15:38:28] [Render thread/INFO]: [CobblePulse-Claims][livetest] PASS fiche_lecture_seule - fr.cobblepulse.claims.client.screen.ClaimInfoScreen@76058a82
+[15:38:30] [Render thread/INFO]: [CobblePulse-Claims][livetest] LIVETEST SUMMARY: 35 pass, 0 fail
+captures : ['client-latest.log', 'client.log', 'live_01_coin_a.png', 'live_02_claim_3d.png', 'live_03_titre_entree.png', 'live_04_gestion_general.png', 'live_05_gestion_nommee.png', 'live_06_permissions.png', 'live_07_recherche.png', 'live_08_commandes.png', 'live_09_membres.png', 'live_10_parcelles.png', 'live_11_rendu_3d_bouton.png', 'live_12_lunette.png', 'live_13_tableau_de_bord.png', 'live_14_options_client.png', 'live_15_admin_territoires.png', 'live_16_admin_permissions.png', 'live_17_admin_economie.png', 'live_18_admin_bordures.png', 'live_19_worldborder_3d.png', 'live_20_minimaps.png', 'live_21_xaero_worldmap.png', 'live_22_journeymap.png', 'live_23_fiche_info.png', 'server.log', 'steps.txt']

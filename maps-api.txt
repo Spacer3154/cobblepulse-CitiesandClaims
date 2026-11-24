@@ -1,0 +1,113 @@
+== .gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_2198_v2/unspecified/xaeroworldmap/9642ae4beab4/xaeroworldmap-9642ae4beab4.jar
+Compiled from "AbstractHighlighter.java"
+public abstract class xaero.map.highlight.AbstractHighlighter {
+  protected final boolean coveringOutsideDiscovered;
+  protected final int[] resultStore;
+  protected xaero.map.highlight.AbstractHighlighter(boolean);
+  public abstract int calculateRegionHash(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, int, int);
+  public abstract boolean regionHasHighlights(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, int, int);
+  public abstract boolean chunkIsHighlit(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, int, int);
+  public abstract int[] getChunkHighlitColor(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, int, int);
+  public abstract net.minecraft.network.chat.Component getBlockHighlightSubtleTooltip(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, int, int);
+  public abstract net.minecraft.network.chat.Component getBlockHighlightBluntTooltip(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, int, int);
+  public abstract void addMinimapBlockHighlightTooltips(java.util.List<net.minecraft.network.chat.Component>, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, int, int, int);
+  protected void setResult(int, int, int);
+  protected int getBlend(int, int);
+  public boolean isCoveringOutsideDiscovered();
+}
+Compiled from "MapWorld.java"
+public class xaero.map.world.MapWorld {
+  public xaero.map.world.MapWorld(java.lang.String, java.lang.String, xaero.map.MapProcessor);
+  public xaero.map.world.MapDimension getDimension(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>);
+  public xaero.map.world.MapDimension createDimensionUnsynced(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>);
+  public java.lang.String getMainId();
+  public java.lang.String getOldUnfixedMainId();
+  public java.lang.String getCurrentMultiworld();
+  public java.lang.String getFutureMultiworldUnsynced();
+  public xaero.map.world.MapDimension getCurrentDimension();
+  public xaero.map.world.MapDimension getFutureDimension();
+  public net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> getCurrentDimensionId();
+  public net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> getFutureDimensionId();
+  public void setFutureDimensionId(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>);
+  public net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> getCustomDimensionId();
+  public void setCustomDimensionId(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>);
+  public void switchToFutureUnsynced();
+  public java.util.List<xaero.map.world.MapDimension> getDimensionsList();
+  public void getDimensions(java.util.List<xaero.map.world.MapDimension>);
+  public int getCurrentMultiworldType();
+  public boolean isMultiplayer();
+  public boolean isCurrentMultiworldTypeConfirmed();
+  public int getFutureMultiworldType(xaero.map.world.MapDimension);
+  public void toggleMultiworldTypeUnsynced();
+  public void unconfirmMultiworldTypeUnsynced();
+  public void confirmMultiworldTypeUnsynced();
+  public boolean isFutureMultiworldTypeConfirmed(xaero.map.world.MapDimension);
+  public void switchToFutureMultiworldTypeUnsynced();
+  public void load();
+  public void saveConfig();
+  public xaero.map.MapProcessor getMapProcessor();
+  public boolean isIgnoreServerLevelId();
+  public boolean isIgnoreHeightmaps();
+  public void setIgnoreHeightmaps(boolean);
+  public java.lang.String getPlayerTeleportCommandFormat();
+  public void setPlayerTeleportCommandFormat(java.lang.String);
+  public java.lang.String getEffectivePlayerTeleportCommandFormat();
+  public java.lang.String getTeleportCommandFormat();
+  public void setTeleportCommandFormat(java.lang.String);
+  public java.lang.String getEffectiveTeleportCommandFormat();
+  public java.lang.String getDimensionTeleportCommandFormat();
+  public void setDimensionTeleportCommandFormat(java.lang.String);
+  public java.lang.String getEffectiveDimensionTeleportCommandFormat();
+  public void clearAllCachedHighlightHashes();
+  public boolean isUsingCustomDimension();
+  public boolean isUsingUnknownDimensionType();
+  public boolean isCacheOnlyMode();
+  public void onWorldChangeUnsynced(net.minecraft.client.multiplayer.ClientLevel);
+  public net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level> getPotentialDimId();
+  public xaero.map.world.MapConnectionNode getPlayerMapKey();
+  public xaero.map.world.MapConnectionManager getMapConnections();
+  public void toggleDimension(boolean);
+  public static java.lang.String convertWorldFolderToRootId(int, java.lang.String);
+  public boolean isUsingDefaultMapTeleport();
+  public boolean isUsingDefaultPlayerTeleport();
+  public void setUseDefaultMapTeleport(boolean);
+  public void setUseDefaultPlayerTeleport(boolean);
+}
+== .gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_2198_v2/unspecified/xaerominimap/3693d2af07d0/xaerominimap-3693d2af07d0.jar
+Compiled from "AbstractHighlighter.java"
+public abstract class xaero.common.minimap.highlight.AbstractHighlighter {
+  protected final boolean coveringOutsideDiscovered;
+  protected final int[] resultStore;
+  protected xaero.common.minimap.highlight.AbstractHighlighter(boolean);
+  public abstract boolean regionHasHighlights(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, int, int);
+  public abstract boolean chunkIsHighlit(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, int, int);
+  public abstract int[] getChunkHighlitColor(net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, int, int);
+  public abstract void addBlockHighlightTooltips(xaero.hud.minimap.info.render.compile.InfoDisplayCompiler, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, int, int, int);
+  protected void setResult(int, int, int);
+  protected int getBlend(int, int);
+  public boolean isCoveringOutsideDiscovered();
+}
+== .gradle/loom-cache/remapped_mods/loom_mappings_1_21_1_layered_hash_2198_v2/unspecified/journeymap-api/00cfe3816ea9/journeymap-api-00cfe3816ea9.jar
+Compiled from "PolygonOverlay.java"
+public final class journeymap.api.v2.client.display.PolygonOverlay extends journeymap.api.v2.client.display.Overlay {
+  public journeymap.api.v2.client.display.PolygonOverlay(java.lang.String, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, journeymap.api.v2.client.model.ShapeProperties, journeymap.api.v2.client.model.MapPolygon);
+  public journeymap.api.v2.client.display.PolygonOverlay(java.lang.String, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, journeymap.api.v2.client.model.ShapeProperties, journeymap.api.v2.client.model.MapPolygonWithHoles);
+  public journeymap.api.v2.client.display.PolygonOverlay(java.lang.String, net.minecraft.resources.ResourceKey<net.minecraft.world.level.Level>, journeymap.api.v2.client.model.ShapeProperties, journeymap.api.v2.client.model.MapPolygon, java.util.List<journeymap.api.v2.client.model.MapPolygon>);
+  public journeymap.api.v2.client.model.MapPolygon getOuterArea();
+  public journeymap.api.v2.client.display.PolygonOverlay setOuterArea(journeymap.api.v2.client.model.MapPolygon);
+  public java.util.List<journeymap.api.v2.client.model.MapPolygon> getHoles();
+  public journeymap.api.v2.client.display.PolygonOverlay setHoles(java.util.List<journeymap.api.v2.client.model.MapPolygon>);
+  public journeymap.api.v2.client.display.PolygonOverlay setPolygonWithHoles(journeymap.api.v2.client.model.MapPolygonWithHoles);
+  public journeymap.api.v2.client.model.ShapeProperties getShapeProperties();
+  public journeymap.api.v2.client.display.PolygonOverlay setShapeProperties(journeymap.api.v2.client.model.ShapeProperties);
+  public java.lang.String toString();
+}
+Compiled from "MapPolygon.java"
+public final class journeymap.api.v2.client.model.MapPolygon {
+  public journeymap.api.v2.client.model.MapPolygon(net.minecraft.core.BlockPos...);
+  public journeymap.api.v2.client.model.MapPolygon(java.util.List<net.minecraft.core.BlockPos>);
+  public java.util.List<net.minecraft.core.BlockPos> getPoints();
+  public journeymap.api.v2.client.model.MapPolygon setPoints(java.util.List<net.minecraft.core.BlockPos>);
+  public java.util.Iterator<net.minecraft.core.BlockPos> iterator();
+  public java.lang.String toString();
+}

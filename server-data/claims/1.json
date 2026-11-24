@@ -1,0 +1,42 @@
+{
+  "id": 1,
+  "owner": "7181ffcf-4d63-3b3a-9030-44bb86f53889",
+  "ownerName": "Alice",
+  "dimension": "minecraft:overworld",
+  "minX": 5000,
+  "minZ": 5000,
+  "maxX": 5024,
+  "maxZ": 5019,
+  "name": "Bourg-Palette",
+  "type": "PLAYER",
+  "parent": 0,
+  "inherit": true,
+  "trusted": {
+    "60657884-228f-3f3b-89a8-8144c53893cd": "MANAGER",
+    "a71765e3-354c-3e6a-9ca5-85e9a319672f": "BUILD"
+  },
+  "trustedNames": {
+    "60657884-228f-3f3b-89a8-8144c53893cd": "Carol",
+    "a71765e3-354c-3e6a-9ca5-85e9a319672f": "Bob"
+  },
+  "visitorFlags": {
+    "container.chest_barrel": "ALLOW",
+    "command.execute": "ALLOW"
+  },
+  "memberFlags": {
+    "command.execute": "ALLOW"
+  },
+  "staffFlags": [],
+  "commands": {
+    "mode": "BLACKLIST",
+    "list": [
+      "sethome"
+    ]
+  },
+  "settings": {
+    "weather": "CLEAR",
+    "time": 6000,
+    "level_cap": 50
+  },
+  "created": 1795534445785
+}

@@ -1,0 +1,20 @@
+mod fabric-api 0.116.18+1.21.1
+mod fabric-language-kotlin 1.14.2+kotlin.2.4.21
+mod luckperms v5.4.140-fabric
+mod cobblemon 1.8.4F
+mod cobblepulse-clans.jar (ci-output)
+mod cobblepulse-ranch.jar (ci-output)
+mod claims build/libs/cobblepulse-citiesandclaims-1.0.0.jar
+===== run 1 =====
+server ready: True
+> claimadmin selftest
+waiting for: SELFTEST DONE -> True
+> claimadmin reload
+[1] [15:34:10] [Server thread/INFO]: [CobblePulse-Claims][selftest] SELFTEST SUMMARY (phase 1): 161 pass, 0 fail
+exit code 0
+===== run 2 =====
+server ready: True
+> claimadmin selftest
+waiting for: SELFTEST DONE -> True
+[2] [15:34:43] [Server thread/INFO]: [CobblePulse-Claims][selftest] SELFTEST SUMMARY (phase 2): 13 pass, 0 fail
+exit code 0

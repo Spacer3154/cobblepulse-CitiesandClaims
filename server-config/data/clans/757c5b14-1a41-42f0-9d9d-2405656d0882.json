@@ -1,0 +1,31 @@
+{
+  "id": "757c5b14-1a41-42f0-9d9d-2405656d0882",
+  "name": "Testeurs",
+  "tag": "TST",
+  "tagColor": "&7",
+  "leader": "7181ffcf-4d63-3b3a-9030-44bb86f53889",
+  "mode": "INVITE_ONLY",
+  "description": "",
+  "influence": 0,
+  "warWins": 0,
+  "warLosses": 0,
+  "warDraws": 0,
+  "pvpWins": 0,
+  "pvpLosses": 0,
+  "createdAt": 1795534449235,
+  "members": {
+    "7181ffcf-4d63-3b3a-9030-44bb86f53889": {
+      "name": "Alice",
+      "role": "LEADER",
+      "joinedAt": 1795534449236
+    },
+    "60657884-228f-3f3b-89a8-8144c53893cd": {
+      "name": "Carol",
+      "role": "MEMBER",
+      "joinedAt": 1795534449240
+    }
+  },
+  "invites": {},
+  "requests": {},
+  "inventory": ""
+}

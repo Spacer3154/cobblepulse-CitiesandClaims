@@ -1,0 +1,32 @@
+{
+  "edge_buffer": 2,
+  "dimensions": {
+    "minecraft:overworld": {
+      "enabled": true,
+      "centerX": 0.0,
+      "centerZ": 0.0,
+      "shape": "CIRCLE",
+      "radius": 10000.0,
+      "sizeX": 4000.0,
+      "sizeZ": 4000.0
+    },
+    "minecraft:the_nether": {
+      "enabled": true,
+      "centerX": 0.0,
+      "centerZ": 0.0,
+      "shape": "RECTANGLE",
+      "radius": 10000.0,
+      "sizeX": 4000.0,
+      "sizeZ": 4000.0
+    },
+    "minecraft:the_end": {
+      "enabled": true,
+      "centerX": 100.0,
+      "centerZ": -50.0,
+      "shape": "CIRCLE",
+      "radius": 5000.0,
+      "sizeX": 4000.0,
+      "sizeZ": 4000.0
+    }
+  }
+}

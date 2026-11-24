@@ -1,0 +1,11 @@
+{
+  "uuid": "7181ffcf-4d63-3b3a-9030-44bb86f53889",
+  "name": "Alice",
+  "accrued": 2000,
+  "bonus": 77,
+  "progressMs": 720000,
+  "playedMs": 0,
+  "firstJoin": 1795534445376,
+  "lastSeen": 1795534445376,
+  "toolsGiven": false
+}

@@ -1,0 +1,4 @@
+journeymap: journeymap-fabric-1.21.1-6.0.10.jar (1.21.1-6.0.10+fabric) OK
+journeymap-api: META-INF/jars/journeymap-api-fabric-2.0.0-1.21.1.jar
+xaerominimap: xaerominimap-fabric-1.21.1-26.6.0.jar (fabric-1.21.1-26.6.0) OK
+xaeroworldmap: xaeroworldmap-fabric-1.21.1-1.47.0.jar (fabric-1.21.1-1.47.0) OK
