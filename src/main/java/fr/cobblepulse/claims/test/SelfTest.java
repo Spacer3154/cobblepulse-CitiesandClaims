@@ -239,10 +239,23 @@ public final class SelfTest {
             check("refus_solde", !r3.ok() && r3.message().contains("Solde"), r3.message());
             ClaimManager.Result r4 = ClaimManager.create(bob, "minecraft:overworld", 9990, 0, 10010, 20, false);
             check("refus_bordure", !r4.ok() && r4.message().contains("bordure"), r4.message());
-            Perms.override(bob.getUUID(), Perms.LIMIT_CLAIMS + ".1", true);
+            // limite de territoires par joueur (config.json), puis remplacement par LuckPerms (s'il est autorise)
+            ClaimsConfig.Claims cc = ClaimsConfig.get().claims;
+            int oldMax = cc.max_claims_per_player;
+            boolean oldLp = cc.luckperms_max_claims_override;
+            cc.max_claims_per_player = 1;
             ClaimManager.Result r5 = ClaimManager.create(bob, "minecraft:overworld", X0 + 30, Z0, X0 + 39, Z0 + 9, false);
             ClaimManager.Result r6 = ClaimManager.create(bob, "minecraft:overworld", X0 + 45, Z0, X0 + 54, Z0 + 9, false);
-            check("limite_max_claims", r5.ok() && !r6.ok() && r6.message().contains("maximal"), r5.message() + " / " + r6.message());
+            check("limite_claims_config", r5.ok() && !r6.ok() && r6.message().contains("maximal"), r5.message() + " / " + r6.message());
+            Perms.override(bob.getUUID(), Perms.LIMIT_CLAIMS + ".3", true);
+            check("limite_claims_luckperms", ClaimManager.maxClaims(bob) == 3, "" + ClaimManager.maxClaims(bob));
+            cc.luckperms_max_claims_override = false;
+            check("limite_claims_config_seule", ClaimManager.maxClaims(bob) == 1, "" + ClaimManager.maxClaims(bob));
+            cc.max_claims_per_player = 0;
+            check("limite_claims_illimitee", ClaimManager.maxClaims(bob) == Integer.MAX_VALUE, "");
+            cc.max_claims_per_player = oldMax;
+            cc.luckperms_max_claims_override = oldLp;
+            check("limite_claims_defaut_10", ClaimsConfig.get().claims.max_claims_per_player == 10, "");
             if (r5.ok()) ClaimManager.delete(r5.claim());
             Perms.clearOverrides(bob.getUUID());
         });

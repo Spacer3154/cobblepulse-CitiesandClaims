@@ -136,8 +136,11 @@ public final class ClaimManager {
         return INDEX.overlapping(dim, x1, z1, x2, z2);
     }
 
+    /** Limite de territoires du joueur : config.json (max_claims_per_player), remplacee par LuckPerms si autorise. */
     public static int maxClaims(ServerPlayer p) {
-        return Perms.numeric(p, Perms.LIMIT_CLAIMS, ClaimsConfig.get().claims.max_claims_default);
+        ClaimsConfig.Claims cfg = ClaimsConfig.get().claims;
+        int base = cfg.max_claims_per_player <= 0 ? Integer.MAX_VALUE : cfg.max_claims_per_player;
+        return cfg.luckperms_max_claims_override ? Perms.numeric(p, Perms.LIMIT_CLAIMS, base) : base;
     }
 
     // ------------------------------------------------------------------ creation
@@ -176,7 +179,7 @@ public final class ClaimManager {
             if (area < cfg.min_area) return Result.fail("Un claim doit couvrir au moins " + cfg.min_area + " blocs.");
             int max = maxClaims(actor);
             if (max != Integer.MAX_VALUE && ownedBy(actor.getUUID()).size() >= max)
-                return Result.fail("Vous possédez déjà le nombre maximal de claims (" + max + ").");
+                return Result.fail("Vous possédez déjà le nombre maximal de territoires (" + max + ").");
             long available = BlockEconomy.available(actor.getUUID());
             if (available < area) return Result.fail("Solde insuffisant : " + area + " blocs requis, " + available + " disponibles.");
         }

@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 @Mixin(value = BattleRegistry.class, remap = false)
 public abstract class BattleRegistryMixin {
     @ModifyVariable(method = "startBattle", at = @At("HEAD"), argsOnly = true, ordinal = 0, remap = false)
-    private static BattleFormat cpclaims$levelCap(BattleFormat format, BattleFormat same, BattleSide side1, BattleSide side2) {
+    private static BattleFormat cpclaims$levelCap(BattleFormat format, BattleFormat same, BattleSide side1, BattleSide side2, boolean silent) {
         try {
             return CobblemonHooks.levelCap(format, side1, side2);
         } catch (Throwable t) {

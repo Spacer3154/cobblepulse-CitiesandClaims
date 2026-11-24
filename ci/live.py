@@ -32,8 +32,8 @@ for f in glob.glob(os.path.join(SRV, "mods", "*.jar")):
         continue
     shutil.copy(f, os.path.join(MC, "mods"))
 for n in ["journeymap.jar", "xaerominimap.jar", "xaeroworldmap.jar"]:
-    if os.path.exists(os.path.join("libs", n)):
-        shutil.copy(os.path.join("libs", n), os.path.join(MC, "mods", n))
+    if os.path.exists(os.path.join("libs", "runtime", n)):
+        shutil.copy(os.path.join("libs", "runtime", n), os.path.join(MC, "mods", n))
 log("mods client : %s" % sorted(os.listdir(os.path.join(MC, "mods"))))
 version = "fabric:1.21.1:" + props.get("loader_version", "0.19.5")
 base = [sys.executable, "-m", "portablemc", "--main-dir", MC, "--work-dir", MC]

@@ -21,6 +21,9 @@ Données : `world/cobblepulse_claims/` (un fichier JSON par claim et par joueur,
 ## Économie de blocs
 150 blocs toutes les 30 minutes de jeu effectif (hors AFK, 5 min), 500 au départ, cumul passif plafonné à 5 000 (ajustable par grade). Le minuteur est sauvegardé en continu. Les crédits du staff dépassent le plafond sans le réinitialiser. Tout se règle dans l'écran d'administration ou `config.json`.
 
+## Limite de territoires par joueur
+`config/cobblepulse/claims/config.json` → `claims.max_claims_per_player` (10 par défaut ; 0 = illimité). Réglage du fichier uniquement, pris en compte par `/claimadmin reload`. Seuls les territoires principaux comptent (ni les parcelles ni les claims admin). `claims.luckperms_max_claims_override` (true) laisse les nœuds `cobblepulse.claims.limit.max_claims.<n>` du cahier des charges remplacer cette limite pour un grade ; à `false`, la config est la seule source.
+
 ## Touche contextuelle (K, réassignable)
 - Dans son claim (ou un claim géré) : **ClaimManagerScreen** — nom de la ville, matrice des permissions (recherche, catégories A à F, sélecteur Autorisé / Interdit / Défaut, cadenas sur les permissions verrouillées), sous-panneau des commandes (tout autoriser, tout bloquer, liste noire, liste blanche), membres et rôles, parcelles, aperçu 2D et bouton du rendu 3D, bouton staff « Convertir en Claim Admin ».
 - Dans le claim d'un tiers : fiche en lecture seule. Dans la nature : tableau de bord (claims, solde, compte à rebours du prochain palier).
@@ -42,7 +45,7 @@ Niveaux de confiance : **access** (boutons, leviers, lits, portes, soigneur et P
 | Nœud | Par défaut |
 |---|---|
 | `cobblepulse.claims.use`, `.create`, `.city_name`, `.subclaim`, `.trust`, `.accrue` | accordé |
-| `cobblepulse.claims.limit.max_claims.<n>` (ou `.unlimited`), `.max_blocks.<n>`, `.blocks_per_interval.<n>` | valeurs de `config.json` |
+| `cobblepulse.claims.limit.max_claims.<n>` (ou `.unlimited`, si `luckperms_max_claims_override`), `.max_blocks.<n>`, `.blocks_per_interval.<n>` | valeurs de `config.json` |
 | `cobblepulse.staff.bypass`, `.inspect_all`, `.convert_admin`, `.delete_others` | opérateur (niveau 2) |
 | `cobblepulse.admin.config`, `.worldborder`, `.give_blocks` | opérateur (niveau 2) |
 

@@ -41,8 +41,13 @@ public final class ClaimsConfig {
     public static final class Claims {
         public int min_width = 5;
         public int min_area = 25;
-        /** Nombre de claims par defaut (surcharge : cobblepulse.claims.limit.max_claims.<n> ou .unlimited). */
-        public int max_claims_default = 10;
+        /**
+         * Nombre maximal de territoires (claims principaux) par joueur. Reglage du fichier uniquement (pas d'ecran).
+         * 0 ou negatif = illimite. Les parcelles et les claims admin ne comptent pas.
+         */
+        public int max_claims_per_player = 10;
+        /** Les noeuds LuckPerms cobblepulse.claims.limit.max_claims.<n> (ou .unlimited) remplacent-ils la limite ci-dessus ? */
+        public boolean luckperms_max_claims_override = true;
         public int subclaim_min_width = 1;
         public int max_city_name_length = 32;
         public boolean give_tools_on_first_join = true;

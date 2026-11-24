@@ -16,6 +16,21 @@ JARS = {
 }
 
 
+def compile_copy(data):
+    """Copie pour la compilation : sans l'attribut Fabric-Loom-Version du manifeste (ces mods sont construits avec un Loom
+    plus recent ; seule la phase de compilation est concernee, le jeu utilise les JARs d'origine)."""
+    src = zipfile.ZipFile(io.BytesIO(data))
+    buf = io.BytesIO()
+    with zipfile.ZipFile(buf, "w", zipfile.ZIP_DEFLATED) as out:
+        for item in src.infolist():
+            content = src.read(item.filename)
+            if item.filename == "META-INF/MANIFEST.MF":
+                lines = content.decode("utf-8", "replace").splitlines()
+                content = ("\r\n".join(l for l in lines if not l.startswith("Fabric-Loom-Version")) + "\r\n").encode("utf-8")
+            out.writestr(item, content)
+    return buf.getvalue()
+
+
 def get(url):
     req = urllib.request.Request(url, headers=UA)
     with urllib.request.urlopen(req, timeout=300) as r:
@@ -29,12 +44,14 @@ for name, sha1 in JARS.items():
         f = next(f for f in v["files"] if f["hashes"].get("sha1") == sha1)
         data = get(f["url"])
         assert hashlib.sha1(data).hexdigest() == sha1, "empreinte differente"
-        open(os.path.join(LIBS, name + ".jar"), "wb").write(data)
+        os.makedirs(os.path.join(LIBS, "runtime"), exist_ok=True)
+        open(os.path.join(LIBS, "runtime", name + ".jar"), "wb").write(data)
+        open(os.path.join(LIBS, name + ".jar"), "wb").write(compile_copy(data))
         report.append(f"{name}: {f['filename']} ({v['version_number']}) OK")
         if name == "journeymap":
             z = zipfile.ZipFile(io.BytesIO(data))
             api = next(n for n in z.namelist() if n.startswith("META-INF/jars/journeymap-api"))
-            open(os.path.join(LIBS, "journeymap-api.jar"), "wb").write(z.read(api))
+            open(os.path.join(LIBS, "journeymap-api.jar"), "wb").write(compile_copy(z.read(api)))
             report.append(f"journeymap-api: {api}")
     except Exception as e:
         report.append(f"{name}: ERREUR {e}")
