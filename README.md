@@ -64,3 +64,5 @@ JourneyMap (API v2, `PolygonOverlay`), Xaero's Minimap et Xaero's World Map (sur
 
 ## Tests automatiques (GitHub Actions)
 À chaque push : compilation, auto-tests sur un vrai serveur (Cobblemon 1.8.4, LuckPerms, Clans, Ranch) sur deux démarrages, puis un vrai client avec JourneyMap et les cartes de Xaero. Résultats, captures et jar sur la branche `ci-output`.
+
+Dernier passage : serveur 161/161 (1er démarrage) et 13/13 (persistance au 2e démarrage), client 35/35.

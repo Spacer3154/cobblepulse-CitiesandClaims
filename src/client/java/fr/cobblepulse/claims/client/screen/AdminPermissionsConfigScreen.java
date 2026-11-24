@@ -211,8 +211,10 @@ public class AdminPermissionsConfigScreen extends BaseScreen {
         if (data.has("maxClaims")) {
             int mc = data.get("maxClaims").getAsInt();
             g.drawString(font, trim("Territoires par joueur : " + (mc <= 0 ? "illimité" : String.valueOf(mc)), w / 2 - 16), x + 6, y + 146, UiKit.TEXT, false);
-            g.drawString(font, trim("config.json → claims.max_claims_per_player" + (data.get("maxClaimsLp").getAsBoolean() ? " (+ LuckPerms)" : ""), w / 2 - 16),
-                    x + 6, y + 157, UiKit.DIM, false);
+            g.drawString(font, trim("Réglable dans config.json uniquement :", w / 2 - 16), x + 6, y + 158, UiKit.DIM, false);
+            g.drawString(font, trim("claims.max_claims_per_player", w / 2 - 16), x + 6, y + 169, UiKit.DIM, false);
+            if (data.get("maxClaimsLp").getAsBoolean())
+                g.drawString(font, trim("Surcharge LuckPerms : …limit.max_claims.<n>", w / 2 - 16), x + 6, y + 180, UiKit.DIM, false);
         }
 
         int rx = x + w / 2 + 4, rw = w / 2 - 4;
