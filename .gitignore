@@ -1,0 +1,11 @@
+.gradle/
+build/
+out/
+run/
+run-server/
+run-client/
+run-prod-client/
+*.iml
+.idea/
+deps/
+libs/

@@ -1,0 +1,60 @@
+plugins {
+    id 'fabric-loom' version "${loom_version}"
+}
+
+version = project.mod_version
+group = project.maven_group
+
+base {
+    archivesName = project.archives_base_name
+}
+
+repositories {
+    maven { name = 'Cobblemon'; url = 'https://maven.impactdev.net/repository/development/' }
+    mavenCentral()
+}
+
+loom {
+    splitEnvironmentSourceSets()
+    mods {
+        "cobblepulse_claims" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    modImplementation "net.fabricmc:fabric-language-kotlin:${project.flk_version}"
+
+    // Cobblemon (evenements de capture, combats, machines, paturages)
+    modImplementation("com.cobblemon:fabric:${project.cobblemon_version}") { transitive = false }
+
+    // Integrations optionnelles (presentes chez le joueur ou sur le serveur, jamais embarquees)
+    compileOnly "net.luckperms:api:${project.luckperms_api_version}"
+    // JourneyMap (API v2), Xaero's Minimap, Xaero's World Map : JARs des memes versions que ceux fournis, remappes par Loom
+    modCompileOnly files('libs/journeymap-api.jar', 'libs/xaerominimap.jar', 'libs/xaeroworldmap.jar')
+}
+
+processResources {
+    inputs.property 'version', project.version
+    filesMatching('fabric.mod.json') {
+        expand 'version': project.version
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 21
+    it.options.encoding = 'UTF-8'
+    it.options.compilerArgs += ['-Xmaxerrs', '1000']
+}
+
+java {
+    withSourcesJar()
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+}

@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_gold": { "trigger": "minecraft:inventory_changed", "conditions": { "items": [ { "items": "#c:ingots/gold" } ] } },
+    "has_the_recipe": { "trigger": "minecraft:recipe_unlocked", "conditions": { "recipe": "cobblepulse_claims:claim_inspector" } }
+  },
+  "requirements": [ [ "has_gold", "has_the_recipe" ] ],
+  "rewards": { "recipes": [ "cobblepulse_claims:claim_inspector" ] }
+}

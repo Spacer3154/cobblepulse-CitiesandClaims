@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "cobblepulse_claims",
+  "version": "${version}",
+  "name": "CobblePulse Cities & Claims",
+  "description": "Claims, villes, parcelles et WorldBorders par dimension pour le serveur CobblePulse : balise de territoire, lunette topographique, permissions fines, intégration Cobblemon, clans CobblePulse, JourneyMap et cartes de Xaero.",
+  "authors": ["CobblePulse"],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/cobblepulse_claims/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["fr.cobblepulse.claims.CobblePulseClaims"],
+    "client": ["fr.cobblepulse.claims.client.ClaimsClient"],
+    "journeymap": ["fr.cobblepulse.claims.client.map.JourneyMapClaimsPlugin"]
+  },
+  "mixins": [
+    "cobblepulse_claims.mixins.json",
+    {
+      "config": "cobblepulse_claims.client.mixins.json",
+      "environment": "client"
+    }
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "fabric-language-kotlin": "*",
+    "cobblemon": ">=1.8.0"
+  },
+  "recommends": {
+    "luckperms": "*"
+  },
+  "suggests": {
+    "cobblepulse": "*",
+    "cobblepulse_utils": "*",
+    "cobblepulse_ranch": "*",
+    "journeymap": "*",
+    "xaerominimap": "*",
+    "xaeroworldmap": "*"
+  }
+}

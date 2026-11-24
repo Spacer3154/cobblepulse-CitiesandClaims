@@ -1,0 +1,76 @@
+name: build
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 100
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Discover versions (Modrinth)
+        run: |
+          mkdir -p out
+          python3 ci/discover.py out/discover > out/discover.log 2>&1 || true
+
+      - name: Fetch map mods (JourneyMap, Xaero) by SHA-1
+        run: python3 ci/fetch_maps.py out || true
+
+      - name: Build
+        id: build
+        run: |
+          mkdir -p out
+          set +e
+          ./gradlew build --stacktrace --no-daemon > out/build.log 2>&1
+          status=$?
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+          grep -E "error:|warning:.*[Mm]ixin|FAILURE|What went wrong" -A3 out/build.log > out/build-errors.txt || true
+          for j in build/libs/*.jar; do case "$j" in *-sources.jar) ;; *) cp "$j" out/ ;; esac; done 2>/dev/null || true
+          # signatures (javap) des API de cartes remappees, pour le diagnostic ; les JARs eux-memes ne sont jamais publies
+          for f in $(find .gradle ~/.gradle/caches -name "*.jar" 2>/dev/null | grep -iE "remapped.*(journeymap|xaero)"); do
+            echo "== $f" >> out/maps-api.txt
+            for c in journeymap.api.v2.client.display.PolygonOverlay journeymap.api.v2.client.model.MapPolygon xaero.map.highlight.AbstractHighlighter xaero.common.minimap.highlight.AbstractHighlighter xaero.map.world.MapWorld; do
+              javap -cp "$f" $c >> out/maps-api.txt 2>/dev/null || true
+            done
+          done
+          exit 0
+
+      - name: Server self-tests
+        if: steps.build.outputs.status == '0'
+        timeout-minutes: 35
+        run: python3 ci/smoke.py out || true
+
+      - name: Live test (vrai client connecte au serveur)
+        if: steps.build.outputs.status == '0'
+        timeout-minutes: 45
+        run: python3 ci/live.py out || true
+
+      - name: Publish CI outputs to branch ci-output
+        if: always()
+        run: |
+          cd out
+          echo "sha=${GITHUB_SHA} build=${{ steps.build.outputs.status }} run=${GITHUB_RUN_ID}" > STATUS
+          git init -q -b ci-output
+          git config user.name "claims-ci"
+          git config user.email "ci@users.noreply.github.com"
+          git add -A
+          git commit -qm "CI output ${GITHUB_SHA}"
+          git push -qf "https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${GITHUB_REPOSITORY}.git" ci-output
