@@ -87,6 +87,10 @@ def wait_for(token, timeout):
 ok = wait_for("Done (", 900)
 log("serveur pret : %s" % ok)
 if ok:
+    # chunks de la zone de test generes avant la connexion du client
+    srv.stdin.write("forceload add 1984 1984 2048 2040\n")
+    srv.stdin.flush()
+    wait_for("force loaded", 300)
     for c in ["gamerule doDaylightCycle false", "gamerule doWeatherCycle false", "gamerule doMobSpawning false", "time set 6000", "weather clear",
               "lp user %s permission set cobblepulse.claims.limit.max_blocks.12000 true" % PUUID,
               "lp user %s permission set cobblepulse.claims.limit.blocks_per_interval.300 true" % PUUID]:

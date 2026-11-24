@@ -47,7 +47,7 @@ final class LiveTest {
     private static final List<Step> STEPS = new ArrayList<>();
     private static int ticks, start = -1, pass, fail, index, nextAt;
     private static final int X = 2000, Y = 150, Z = 2000;
-    private static int claimId, subId;
+    private static int claimId, subId, waited;
     private static Vec3 before;
 
     private LiveTest() {}
@@ -88,6 +88,11 @@ final class LiveTest {
         }
     }
 
+    /** Se place a portee du bloc vise (portee d'interaction ~5 blocs). */
+    private static void near(Minecraft mc, int x, int z) {
+        cmd(mc, "tp @s " + x + ".5 " + (Y + 1) + " " + (z - 2) + ".5 0 60");
+    }
+
     private static void useOn(Minecraft mc, int x, int z) {
         mc.gameMode.useItemOn(mc.player, InteractionHand.MAIN_HAND, new BlockHitResult(new Vec3(x + 0.5, Y + 1.0, z + 0.5), Direction.UP, new BlockPos(x, Y, z), false));
     }
@@ -122,6 +127,10 @@ final class LiveTest {
             cmd(mc, "forceload add " + (X - 16) + " " + (Z - 16) + " " + (X + 48) + " " + (Z + 40));
         });
         step(mc -> cmd(mc, "tp @s " + (X + 10) + " " + (Y + 6) + " " + (Z - 10) + " 0 35"));
+        // le serveur peut etre occupe a generer les chunks : on attend d'etre arrive
+        STEPS.add(new Step(20, mc -> {
+            if (mc.player.distanceToSqr(X + 10.5, Y + 6, Z - 9.5) > 9 && waited++ < 30) index--;
+        }));
         step(mc -> {
             cmd(mc, "fill " + (X - 10) + " " + Y + " " + (Z - 15) + " " + (X + 40) + " " + Y + " " + (Z + 30) + " minecraft:grass_block");
             cmd(mc, "fill " + (X - 10) + " " + (Y + 1) + " " + (Z - 15) + " " + (X + 40) + " " + (Y + 8) + " " + (Z + 30) + " minecraft:air");
@@ -133,13 +142,15 @@ final class LiveTest {
             check("outils_recus", wand && insp, "");
             check("sync_connecte", ClientState.connectedToMod && ClientState.border != null && ClientState.border.enabled, "dim=" + ClientState.dim);
             select(mc, ModItems.CLAIM_WAND);
-            useOn(mc, X, Z);
+            near(mc, X, Z);
         });
+        step(15, mc -> useOn(mc, X, Z));
         step(mc -> {
             check("coin_a_repere", ClientState.selection != null && ClientState.selection.x == X && ClientState.selection.z == Z, "");
             shot(mc, "live_01_coin_a");
-            useOn(mc, X + 20, Z + 15);
+            near(mc, X + 20, Z + 15);
         });
+        step(15, mc -> useOn(mc, X + 20, Z + 15));
         step(mc -> {
             ClientState.CClaim c = own();
             check("claim_cree_et_synchronise", c != null && c.area == 336 && c.minX == X && c.maxZ == Z + 15, c == null ? "aucun" : c.area + "");
@@ -222,9 +233,12 @@ final class LiveTest {
             shot(mc, "live_09_membres");
             mc.setScreen(null);
             select(mc, ModItems.CLAIM_WAND);
-            useOn(mc, X + 2, Z + 2);
+            near(mc, X + 2, Z + 2);
         });
-        step(mc -> useOn(mc, X + 6, Z + 6));
+        step(15, mc -> useOn(mc, X + 2, Z + 2));
+        step(mc -> near(mc, X + 6, Z + 6));
+        step(15, mc -> useOn(mc, X + 6, Z + 6));
+        step(15, mc -> cmd(mc, "tp @s " + (X + 10) + " " + (Y + 1) + " " + (Z + 10) + " 0 10"));
         step(mc -> {
             ClientState.CClaim sub = null;
             for (ClientState.CClaim c : ClientState.CLAIMS.values()) if (c.parent == claimId) sub = c;
@@ -249,9 +263,8 @@ final class LiveTest {
             ClientState.forced3d = 0;
             select(mc, ModItems.CLAIM_INSPECTOR);
         });
-        step(mc -> {
-            useOn(mc, X + 3, Z + 3);
-        });
+        step(mc -> near(mc, X + 3, Z + 3));
+        step(15, mc -> useOn(mc, X + 3, Z + 3));
         step(mc -> shot(mc, "live_12_lunette"));
         step(mc -> {
             select(mc, null);
@@ -328,8 +341,8 @@ final class LiveTest {
         });
         step(mc -> {
             mc.setScreen(null);
-            KeyMapping jm = findKey("journeymap", "fullscreen");
-            if (jm == null) jm = findKey("journeymap", "map_toggle");
+            KeyMapping jm = findKey("key.journeymap.map_toggle_alt");
+            if (jm == null) jm = findKey("key.journeymap.map_toggle");
             if (jm != null) KeyMapping.click(KeyBindingHelper.getBoundKeyOf(jm));
         });
         step(80, mc -> {

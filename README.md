@@ -51,8 +51,8 @@ Niveaux de confiance : **access** (boutons, leviers, lits, portes, soigneur et P
 
 Un refus explicite dans LuckPerms l'emporte toujours. Le staff garde la possibilité de jouer normalement avec `/claimadmin bypass off`.
 
-## Permissions de claim (82)
-Le référentiel complet du cahier des charges (catégories A à F) plus **`cobblemon.ranch_daycare`** : ouvrir un Bloc de Pension de CobblePulse-Ranch est interdit aux visiteurs, permis au propriétaire et aux joueurs ajoutés par `/trust` (niveau container ou plus). Valeurs par défaut et statut Modifiable / Verrouillé : `config/cobblepulse/claims/flags.json` ou l'écran d'administration. Les permissions d'environnement et d'administration (explosions, feu, liquides, pistons, grief des mobs, apparitions, soin à l'entrée, plafond de niveau, arène, inventaire conservé, invulnérabilité, faim, météo et heure figées, vol) s'appliquent à la zone entière.
+## Permissions de claim (84)
+Les 83 permissions du cahier des charges (catégories A à F) plus **`cobblemon.ranch_daycare`** : ouvrir un Bloc de Pension de CobblePulse-Ranch est interdit aux visiteurs, permis au propriétaire et aux joueurs ajoutés par `/trust` (niveau container ou plus). Valeurs par défaut et statut Modifiable / Verrouillé : `config/cobblepulse/claims/flags.json` ou l'écran d'administration. Les permissions d'environnement et d'administration (explosions, feu, liquides, pistons, grief des mobs, apparitions, soin à l'entrée, plafond de niveau, arène, inventaire conservé, invulnérabilité, faim, météo et heure figées, vol) s'appliquent à la zone entière.
 
 ## WorldBorders par dimension
 `config/cobblepulse/claims/worldborders.json` : centre, cercle (rayon) ou rectangle (largeur X, longueur Z) pour chaque dimension, mods compris. Par défaut : Overworld cercle de 10 000, Nether rectangle 4 000 × 4 000, End cercle de 5 000 centré en (100, −50). Pas de claim au-delà, repoussement doux des joueurs, montures et Pokémon, téléportations hors limite annulées, grief bloqué aux abords (`edge_buffer`, 2 blocs).

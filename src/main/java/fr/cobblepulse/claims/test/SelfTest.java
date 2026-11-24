@@ -300,10 +300,10 @@ public final class SelfTest {
     }
 
     private static void registry() {
-        check("flags_referentiel", Flags.all().size() == 82, "n=" + Flags.all().size());
+        check("flags_referentiel", Flags.all().size() == 84, "83 du cahier des charges + pension ; n=" + Flags.all().size());
         int[] cats = new int[6];
         for (Flag f : Flags.all()) cats[f.category().ordinal()]++;
-        check("flags_categories", cats[0] == 12 && cats[1] == 14 && cats[2] == 11 && cats[3] == 14 && cats[4] == 19 && cats[5] == 12, java.util.Arrays.toString(cats));
+        check("flags_categories", cats[0] == 12 && cats[1] == 14 && cats[2] == 11 && cats[3] == 16 && cats[4] == 19 && cats[5] == 12, java.util.Arrays.toString(cats));
         check("flag_block_break", Flags.BLOCK_BREAK.defVisitor() == FlagState.DENY && Flags.BLOCK_BREAK.defMember() == FlagState.ALLOW && Flags.editable(Flags.BLOCK_BREAK), "");
         check("flag_admin_verrouille", !Flags.editable(Flags.WILD_SPAWN) && !Flags.editable(Flags.FLY) && !Flags.editable(Flags.WITHER_DRAGON), "");
         check("flag_chorus", Flags.CHORUS.defVisitor() == FlagState.DENY && Flags.CHORUS.defMember() == FlagState.ALLOW, "");
@@ -576,8 +576,10 @@ public final class SelfTest {
         List<Component> sum = InspectorService.summary(bob, home, new BlockPos(X0 + 5, Y, Z0 + 5));
         String all = String.join("\n", sum.stream().map(Component::getString).toList());
         check("lunette_resume", all.contains("Bourg-Palette") && all.contains("Alice") && all.contains("Superficie") && all.contains("500 blocs") && all.contains("Ville"), all);
+        for (int cx = (home.minX - 8) >> 4; cx <= (home.maxX + 8) >> 4; cx++) for (int cz = (home.minZ - 8) >> 4; cz <= (home.maxZ + 8) >> 4; cz++) level.getChunk(cx, cz);
+        at(bob, X0 + 5, Z0 + 5);
         InspectorService.inspect(bob, new BlockPos(X0 + 5, Y, Z0 + 5));
-        check("reperes_blocs_fantomes", FakeVisuals.shownCount(bob.getUUID()) > 8, "" + FakeVisuals.shownCount(bob.getUUID()));
+        check("reperes_blocs_fantomes", FakeVisuals.shownCount(bob.getUUID()) > 30, "" + FakeVisuals.shownCount(bob.getUUID()));
     }
 
     private static Claim namelessCopy(Claim c) {
@@ -608,7 +610,7 @@ public final class SelfTest {
         check("explosion_flag_allow", Protection.allowsZone(level, new BlockPos(X0 - 5, Y, Z0), Flags.EXPLOSION_BLOCK), "nature");
         pig.discard();
         // feu : planches entourees de feu dans le claim
-        BlockPos plank = new BlockPos(X0 + 20, Y + 1, Z0 + 20);
+        BlockPos plank = new BlockPos(X0 + 20, Y + 1, Z0 + 15);
         level.setBlock(plank, Blocks.OAK_PLANKS.defaultBlockState(), 3);
         BlockPos fire = plank.east();
         level.setBlock(fire, Blocks.FIRE.defaultBlockState(), 3);

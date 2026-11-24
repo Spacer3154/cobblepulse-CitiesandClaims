@@ -81,7 +81,7 @@ public final class AdminCommands {
                                 .then(literal("definir").then(argument("n", IntegerArgumentType.integer(0)).executes(c -> blocks(c, "set", ClaimCommands.intArg(c, "n")))))))
                 .then(literal("bordure").requires(s -> Perms.has(s, Perms.ADMIN_WORLDBORDER))
                         .executes(AdminCommands::borders)
-                        .then(argument("dimension", StringArgumentType.string()).suggests(DIMS)
+                        .then(argument("dimension", net.minecraft.commands.arguments.ResourceLocationArgument.id()).suggests(DIMS)
                                 .executes(AdminCommands::borders)
                                 .then(literal("activer").executes(c -> border(c, b -> b.enabled = true)))
                                 .then(literal("desactiver").executes(c -> border(c, b -> b.enabled = false)))
@@ -219,7 +219,7 @@ public final class AdminCommands {
         CommandSourceStack src = c.getSource();
         String only = null;
         try {
-            only = StringArgumentType.getString(c, "dimension");
+            only = net.minecraft.commands.arguments.ResourceLocationArgument.getId(c, "dimension").toString();
         } catch (IllegalArgumentException ignored) {
         }
         for (var e : WorldBorders.all().entrySet()) {
@@ -235,7 +235,7 @@ public final class AdminCommands {
     }
 
     private static int border(CommandContext<CommandSourceStack> c, BorderEdit edit) {
-        String dim = StringArgumentType.getString(c, "dimension");
+        String dim = net.minecraft.commands.arguments.ResourceLocationArgument.getId(c, "dimension").toString();
         WorldBorders.Border b = WorldBorders.get(dim);
         if (b == null) {
             Msg.err(c.getSource(), "Dimension inconnue : " + dim);
