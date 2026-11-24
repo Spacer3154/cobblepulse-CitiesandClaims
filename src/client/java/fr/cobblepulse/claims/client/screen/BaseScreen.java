@@ -31,6 +31,8 @@ public abstract class BaseScreen extends Screen {
     private List<Component> pendingTooltip;
     protected int maxW = 470, maxH = 300;
     protected int mouseX, mouseY;
+    /** Index des zones du panneau modal : les infobulles du dessous sont ignorees. */
+    private int overlayFrom;
 
     private record Hit(int x, int y, int w, int h, Runnable click, Runnable right, List<Component> tooltip) {}
 
@@ -103,10 +105,11 @@ public abstract class BaseScreen extends Screen {
             String f = footer();
             if (f != null) g.drawString(font, trim(f, pw - 16), px + 8, py + ph - 13, UiKit.DIM, false);
         }
-        super.render(g, mx, my, pt);
+        overlayFrom = 0;
         renderOverlay(g, mx, my, pt);
+        super.render(g, mx, my, pt);
         if (pendingTooltip == null) {
-            for (int i = hits.size() - 1; i >= 0; i--) {
+            for (int i = hits.size() - 1; i >= overlayFrom; i--) {
                 Hit h = hits.get(i);
                 if (h.tooltip != null && UiKit.in(mx, my, h.x, h.y, h.w, h.h)) {
                     pendingTooltip = h.tooltip;
@@ -119,8 +122,16 @@ public abstract class BaseScreen extends Screen {
 
     protected abstract void renderContent(GuiGraphics g, int mx, int my, float pt, int x, int y, int w, int h);
 
-    /** Dessine par-dessus (sous-panneaux modaux). */
+    /** Dessine par-dessus (sous-panneaux modaux) ; les champs de saisie restent au premier plan. */
     protected void renderOverlay(GuiGraphics g, int mx, int my, float pt) {}
+
+    /** Debut d'un panneau modal : bloque les clics et les infobulles de ce qui est dessous. */
+    protected void beginModal() {
+        hits.add(new Hit(0, 0, width, height, () -> {
+        }, () -> {
+        }, null));
+        overlayFrom = hits.size();
+    }
 
     protected String subtitle() {
         return null;

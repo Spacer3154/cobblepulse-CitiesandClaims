@@ -284,6 +284,9 @@ public final class Views {
         eco.addProperty("initial_blocks", e.initial_blocks);
         eco.addProperty("afk_minutes", e.afk_minutes);
         o.add("economy", eco);
+        // limite de territoires : reglage du fichier uniquement, affichee en lecture seule
+        o.addProperty("maxClaims", ClaimsConfig.get().claims.max_claims_per_player);
+        o.addProperty("maxClaimsLp", ClaimsConfig.get().claims.luckperms_max_claims_override);
         JsonArray borders = new JsonArray();
         for (Map.Entry<String, WorldBorders.Border> be : WorldBorders.all().entrySet()) {
             WorldBorders.Border b = be.getValue();

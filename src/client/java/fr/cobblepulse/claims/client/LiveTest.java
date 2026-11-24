@@ -345,8 +345,18 @@ final class LiveTest {
             if (jm == null) jm = findKey("key.journeymap.map_toggle");
             if (jm != null) KeyMapping.click(KeyBindingHelper.getBoundKeyOf(jm));
         });
+        step(60, mc -> {
+            // premiere ouverture : JourneyMap affiche d'abord son ecran « A propos »
+            if (mc.screen != null && !mc.screen.getClass().getName().toLowerCase().contains("fullscreen")) {
+                CobblePulseClaims.LOG.info(TAG + "écran JourneyMap intermédiaire : {}", mc.screen);
+                mc.setScreen(null);
+                KeyMapping jm = findKey("key.journeymap.map_toggle_alt");
+                if (jm != null) KeyMapping.click(KeyBindingHelper.getBoundKeyOf(jm));
+            }
+        });
         step(80, mc -> {
             CobblePulseClaims.LOG.info(TAG + "écran JourneyMap : {}", mc.screen);
+            check("journeymap_plein_ecran", mc.screen != null, String.valueOf(mc.screen));
             shot(mc, "live_22_journeymap");
         });
         // fiche d'un tiers : le claim devient admin et le joueur n'est plus operateur

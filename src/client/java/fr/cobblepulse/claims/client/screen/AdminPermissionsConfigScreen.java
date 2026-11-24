@@ -112,7 +112,7 @@ public class AdminPermissionsConfigScreen extends BaseScreen {
                 box("b_r_" + selDim, ex + 70, y + 66, 60, num(b.get("radius").getAsDouble()), "Rayon", 9);
                 box("b_sx_" + selDim, ex + 70, y + 86, 60, num(b.get("sx").getAsDouble()), "Largeur X", 9);
                 box("b_sz_" + selDim, ex + 136, y + 86, 60, num(b.get("sz").getAsDouble()), "Longueur Z", 9);
-                box("edge", ex + 70, y + 130, 40, data.get("edgeBuffer").getAsString(), "2", 3);
+                box("edge", ex + 100, y + 130, 40, data.get("edgeBuffer").getAsString(), "2", 3);
             }
             default -> {
             }
@@ -208,6 +208,12 @@ public class AdminPermissionsConfigScreen extends BaseScreen {
         JsonObject e = data.getAsJsonObject("economy");
         g.drawString(font, trim("Actuel : +" + e.get("blocks_per_interval").getAsInt() + " / " + e.get("interval_minutes").getAsInt() + " min, plafond "
                 + e.get("max_accrued_blocks").getAsInt(), w / 2 - 16), x + 6, y + 130, UiKit.MUTED, false);
+        if (data.has("maxClaims")) {
+            int mc = data.get("maxClaims").getAsInt();
+            g.drawString(font, trim("Territoires par joueur : " + (mc <= 0 ? "illimité" : String.valueOf(mc)), w / 2 - 16), x + 6, y + 146, UiKit.TEXT, false);
+            g.drawString(font, trim("config.json → claims.max_claims_per_player" + (data.get("maxClaimsLp").getAsBoolean() ? " (+ LuckPerms)" : ""), w / 2 - 16),
+                    x + 6, y + 157, UiKit.DIM, false);
+        }
 
         int rx = x + w / 2 + 4, rw = w / 2 - 4;
         boolean give = perm("give");
@@ -282,7 +288,7 @@ public class AdminPermissionsConfigScreen extends BaseScreen {
             }
         }, can ? null : "cobblepulse.admin.worldborder requis");
         g.drawString(font, "Marge anti-grief", ex + 6, y + 134, UiKit.TEXT, false);
-        button(g, ex + 116, y + 130, 60, 14, "Appliquer", UiKit.OK, can, () -> {
+        button(g, ex + 146, y + 130, 60, 14, "Appliquer", UiKit.OK, can, () -> {
             try {
                 send("admin_edge", args("value", Integer.parseInt(boxValue("edge").trim())));
             } catch (NumberFormatException ignored) {

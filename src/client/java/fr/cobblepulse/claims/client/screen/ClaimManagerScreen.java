@@ -118,7 +118,10 @@ public class ClaimManagerScreen extends BaseScreen {
             case "perms" -> {
                 EditBox s = box("search", x, y, 150, "", "Rechercher une permission…", 40);
                 s.setVisible(!cmdOpen);
-                if (cmdOpen) box("cmdEntry", px + pw / 2 - 120, py + ph / 2 + 50, 150, "", "Préfixe (ex : sethome)", 48);
+                if (cmdOpen) {
+                    int ow = Math.min(pw - 16, 380);
+                    box("cmdEntry", px + (pw - ow) / 2 + 8, py + (ph - 210) / 2 + 170, 150, "", "Préfixe (ex : sethome)", 48);
+                }
             }
             case "members" -> box("member", x, y + 14, 140, "", "Pseudo ou « public »", 32);
             case "settings" -> {
@@ -411,10 +414,8 @@ public class ClaimManagerScreen extends BaseScreen {
     @Override
     protected void renderOverlay(GuiGraphics g, int mx, int my, float pt) {
         if (!cmdOpen || !"perms".equals(tab)) return;
-        hit(0, 0, width, height, () -> {
-        }, () -> {
-        }, null);
-        int w = 300, h = 210;
+        beginModal();
+        int w = Math.min(pw - 16, 380), h = 210;
         int x = px + (pw - w) / 2, y = py + (ph - h) / 2;
         g.fill(0, 0, width, height, 0x66000000);
         UiKit.panel(g, x, y, w, h, 0xF8161C26, UiKit.ACCENT);
@@ -448,7 +449,7 @@ public class ClaimManagerScreen extends BaseScreen {
         }
         g.disableScissor();
         if (cmdList.isEmpty()) g.drawString(font, "(vide) — ex : sethome, tpa, tpaccept, back, fly, enderchest", x + 12, ly + 4, UiKit.DIM, false);
-        button(g, x + 162, y + h - 40, 56, 14, "Ajouter", UiKit.ACCENT, true, this::addCommand, null);
+        button(g, x + 162, y + h - 40, 60, 14, "Ajouter", UiKit.ACCENT, true, this::addCommand, null);
         button(g, x + 8, y + h - 20, 90, 14, "Appliquer", UiKit.OK, true, () -> {
             com.google.gson.JsonArray arr = new com.google.gson.JsonArray();
             for (String c : cmdList) arr.add(c);
