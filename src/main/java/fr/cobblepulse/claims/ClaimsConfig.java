@@ -88,6 +88,8 @@ public final class ClaimsConfig {
     public static final class Sync {
         /** Distance (blocs) sous laquelle la lunette et la balise dessinent les claims en 3D. */
         public int render_radius = 160;
+        /** Cartes (JourneyMap / Xaero) : un territoire n'est surligne que sur les chunks que le joueur a deja explores. */
+        public boolean map_discovery_required = true;
     }
 
     public static final class Storage {

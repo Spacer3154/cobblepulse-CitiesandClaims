@@ -4,8 +4,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import fr.cobblepulse.claims.CobblePulseClaims;
+import fr.cobblepulse.claims.client.map.DiscoveredShape;
+import fr.cobblepulse.claims.client.map.Discovery;
 import fr.cobblepulse.claims.client.map.JourneyMapClaimsPlugin;
 import fr.cobblepulse.claims.client.map.MapBridge;
+import fr.cobblepulse.claims.client.map.MapStyle;
 import fr.cobblepulse.claims.client.map.XaeroMinimapSupport;
 import fr.cobblepulse.claims.client.map.XaeroWorldMapSupport;
 import fr.cobblepulse.claims.client.render.ClaimWorldRenderer;
@@ -49,6 +52,7 @@ final class LiveTest {
     private static final int X = 2000, Y = 150, Z = 2000;
     private static int claimId, subId, waited;
     private static Vec3 before;
+    private static int reach;
 
     private LiveTest() {}
 
@@ -103,6 +107,24 @@ final class LiveTest {
 
     private static void step(int delay, Consumer<Minecraft> r) {
         STEPS.add(new Step(delay, r));
+    }
+
+    /** Territoire factice cote client (decouverte de la carte). */
+    private static void fake(Minecraft mc, int id, String name, int x1, int z1, int x2, int z2) {
+        ClientState.CClaim c = new ClientState.CClaim();
+        c.id = id;
+        c.name = name;
+        c.named = true;
+        c.owner = "Explorateur";
+        c.type = "PLAYER";
+        c.rel = "OTHER";
+        c.dim = ClientState.dim;
+        c.minX = x1;
+        c.minZ = z1;
+        c.maxX = x2;
+        c.maxZ = z2;
+        c.area = (long) (x2 - x1 + 1) * (z2 - z1 + 1);
+        ClientState.CLAIMS.put(id, c);
     }
 
     private static ClientState.CClaim own() {
@@ -318,6 +340,48 @@ final class LiveTest {
             cmd(mc, "claimadmin bordure minecraft:overworld cercle 10000");
             cmd(mc, "tp @s " + (X + 10) + " " + (Y + 30) + " " + (Z + 8) + " 0 90");
         });
+        // decouverte de la carte : un territoire n'est surligne que sur les chunks deja explores
+        step(mc -> {
+            int pcx = mc.player.chunkPosition().x, pcz = mc.player.chunkPosition().z;
+            check("decouverte_chunk_joueur", Discovery.isDiscovered(pcx, pcz), "chunks decouverts=" + Discovery.count());
+            check("decouverte_regle_serveur", Discovery.required, "config sync.map_discovery_required");
+            java.util.Random rnd = new java.util.Random(7);
+            int bad = 0;
+            for (int t = 0; t < 300; t++) {
+                int x1 = rnd.nextInt(200) - 100, z1 = rnd.nextInt(200) - 100, w = 1 + rnd.nextInt(120), h = 1 + rnd.nextInt(120);
+                long seed = rnd.nextLong();
+                double pr = rnd.nextDouble();
+                DiscoveredShape.ChunkTest ct = (cx, cz) -> new java.util.Random(seed * 31 + cx * 7919L + cz * 104729L).nextDouble() < pr;
+                double area = 0;
+                for (DiscoveredShape.Piece pc : DiscoveredShape.visible(x1, z1, x1 + w - 1, z1 + h - 1, ct)) area += pc.area();
+                if (Math.abs(area - DiscoveredShape.bruteArea(x1, z1, x1 + w - 1, z1 + h - 1, ct)) > 1e-6) bad++;
+            }
+            List<DiscoveredShape.Piece> ring = DiscoveredShape.visible(0, 0, 47, 47, (cx, cz) -> !(cx == 1 && cz == 1));
+            check("decouverte_formes_carte", bad == 0 && ring.size() == 1 && ring.get(0).holes().size() == 1,
+                    "erreurs=" + bad + " anneau=" + ring.size() + "/" + (ring.isEmpty() ? -1 : ring.get(0).holes().size()));
+            reach = (mc.options.getEffectiveRenderDistance() + 3) * 16;
+            fake(mc, -4241, "Terres lointaines", X + 40, Z - 40, X + reach + 400, Z + 60);
+            fake(mc, -4242, "Terres inexplorées", X + 6000, Z + 6000, X + 6100, Z + 6100);
+            ClientState.version++;
+        });
+        step(40, mc -> {
+            int farX = X + reach + 300;
+            check("decouverte_masque_inexplore", !Discovery.isDiscovered(farX >> 4, Z >> 4) && !MapStyle.chunkHighlit(farX >> 4, Z >> 4)
+                    && MapStyle.claimAt(ClientState.dim, farX, Z) == null, "x=" + farX);
+            int[] px = new int[256];
+            check("decouverte_visible_explore", MapStyle.chunkHighlit((X + 48) >> 4, Z >> 4)
+                    && MapStyle.chunkPixels((X + 48) >> 4, Z >> 4, px, (rgb, a) -> rgb << 8 | a)
+                    && MapStyle.claimAt(ClientState.dim, X + 48, Z) != null, "");
+            check("decouverte_journeymap", !MapBridge.JOURNEYMAP || (JourneyMapClaimsPlugin.hidden >= 1 && JourneyMapClaimsPlugin.partial >= 1),
+                    "masques=" + JourneyMapClaimsPlugin.hidden + " partiels=" + JourneyMapClaimsPlugin.partial + " overlays=" + JourneyMapClaimsPlugin.shown);
+            Discovery.mark((X + 6050) >> 4, (Z + 6050) >> 4);
+            check("decouverte_revele", MapStyle.claimAt(ClientState.dim, X + 6050, Z + 6050) != null
+                    && MapStyle.claimAt(ClientState.dim, X + 6090, Z + 6090) == null, "");
+            int n = Discovery.count();
+            Discovery.reloadForTest();
+            check("decouverte_sauvegarde", n > 0 && Discovery.count() == n && Discovery.isDiscovered((X + 6050) >> 4, (Z + 6050) >> 4), n + " -> " + Discovery.count());
+            ClientState.version++;
+        });
         // cartes
         step(mc -> {
             check("journeymap_overlays", !MapBridge.JOURNEYMAP || (JourneyMapClaimsPlugin.ready() && JourneyMapClaimsPlugin.shown >= 3),
@@ -358,6 +422,11 @@ final class LiveTest {
             CobblePulseClaims.LOG.info(TAG + "écran JourneyMap : {}", mc.screen);
             check("journeymap_plein_ecran", mc.screen != null, String.valueOf(mc.screen));
             shot(mc, "live_22_journeymap");
+        });
+        step(mc -> {
+            ClientState.CLAIMS.remove(-4241);
+            ClientState.CLAIMS.remove(-4242);
+            ClientState.version++;
         });
         // fiche d'un tiers : le claim devient admin et le joueur n'est plus operateur
         step(mc -> {

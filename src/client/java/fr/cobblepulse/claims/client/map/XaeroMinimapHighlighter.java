@@ -19,15 +19,13 @@ public class XaeroMinimapHighlighter extends AbstractHighlighter {
     @Override
     public boolean regionHasHighlights(ResourceKey<Level> dim, int regionX, int regionZ) {
         if (!MapStyle.active(d(dim))) return false;
-        int x1 = regionX << 9, z1 = regionZ << 9;
-        return !MapStyle.overlapping(x1, z1, x1 + 511, z1 + 511).isEmpty() || MapStyle.borderCrosses(x1, z1, x1 + 511, z1 + 511);
+        return MapStyle.regionHasHighlights(regionX, regionZ);
     }
 
     @Override
     public boolean chunkIsHighlit(ResourceKey<Level> dim, int chunkX, int chunkZ) {
         if (!MapStyle.active(d(dim))) return false;
-        int x1 = chunkX << 4, z1 = chunkZ << 4;
-        return !MapStyle.overlapping(x1, z1, x1 + 15, z1 + 15).isEmpty() || MapStyle.borderCrosses(x1, z1, x1 + 15, z1 + 15);
+        return MapStyle.chunkHighlit(chunkX, chunkZ);
     }
 
     @Override

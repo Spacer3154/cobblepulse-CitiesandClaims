@@ -6,7 +6,10 @@ import fr.cobblepulse.claims.client.ClientState;
 import java.util.ArrayList;
 import java.util.List;
 
-/** Couleurs par relation et calcul des pixels de territoires / bordure pour les cartes par blocs (Xaero). */
+/**
+ * Couleurs par relation et calcul des pixels de territoires / bordure pour les cartes par blocs (Xaero). Les territoires
+ * ne sont montres que sur les chunks decouverts (voir {@link Discovery}) ; la limite du monde reste toujours visible.
+ */
 public final class MapStyle {
     /** Bleu : clan ; orange : tiers ; violet : administration ; vert / cyan : vous. */
     public static final int BORDER_RGB = 0xFF3030;
@@ -39,10 +42,28 @@ public final class MapStyle {
         return min <= 1 && max >= -1;
     }
 
+    /** Region Xaero (32 x 32 chunks) : y a-t-il quelque chose a peindre ? */
+    public static boolean regionHasHighlights(int regionX, int regionZ) {
+        int x1 = regionX << 9, z1 = regionZ << 9;
+        if (borderCrosses(x1, z1, x1 + 511, z1 + 511)) return true;
+        for (ClientState.CClaim c : overlapping(x1, z1, x1 + 511, z1 + 511)) {
+            if (Discovery.anyVisible(Math.max(c.minX, x1), Math.max(c.minZ, z1), Math.min(c.maxX, x1 + 511), Math.min(c.maxZ, z1 + 511))) return true;
+        }
+        return false;
+    }
+
+    /** Chunk a peindre : territoire sur un chunk decouvert, ou trace de la limite du monde (toujours visible). */
+    public static boolean chunkHighlit(int chunkX, int chunkZ) {
+        int x1 = chunkX << 4, z1 = chunkZ << 4;
+        return (Discovery.visible(chunkX, chunkZ) && !overlapping(x1, z1, x1 + 15, z1 + 15).isEmpty()) || borderCrosses(x1, z1, x1 + 15, z1 + 15);
+    }
+
     public static int regionHash(int x1, int z1, int x2, int z2) {
         int h = ClientConfig.get().map_overlays ? 1 : 0;
         h = h * 31 + (ClientConfig.get().map_worldborder ? 1 : 0);
-        for (ClientState.CClaim c : overlapping(x1, z1, x2, z2)) {
+        List<ClientState.CClaim> over = overlapping(x1, z1, x2, z2);
+        if (!over.isEmpty()) h = h * 31 + Discovery.regionHash(x1 >> 9, z1 >> 9);
+        for (ClientState.CClaim c : over) {
             h = h * 31 + c.id;
             h = h * 31 + c.minX * 7 + c.minZ * 13 + c.maxX * 17 + c.maxZ * 19;
             h = h * 31 + (c.rel == null ? 0 : c.rel.hashCode());
@@ -64,7 +85,9 @@ public final class MapStyle {
         int x0 = chunkX << 4, z0 = chunkZ << 4;
         java.util.Arrays.fill(out, 0, 256, 0);
         boolean any = false;
-        for (ClientState.CClaim c : overlapping(x0, z0, x0 + 15, z0 + 15)) {
+        // decouverte : les territoires ne sont peints que sur les chunks deja explores par le joueur
+        List<ClientState.CClaim> claims = Discovery.visible(chunkX, chunkZ) ? overlapping(x0, z0, x0 + 15, z0 + 15) : List.of();
+        for (ClientState.CClaim c : claims) {
             int rgb = c.isSub() ? 0xFFFFFF : c.rgb();
             int fill = packer.pack(rgb, c.isSub() ? 0x22 : 0x48);
             int edge = packer.pack(rgb, 0xD0);
@@ -98,7 +121,7 @@ public final class MapStyle {
     }
 
     public static ClientState.CClaim claimAt(String dim, int x, int z) {
-        if (!active(dim)) return null;
+        if (!active(dim) || !Discovery.visible(x >> 4, z >> 4)) return null;
         return ClientState.at(x, z);
     }
 

@@ -60,5 +60,7 @@ Les 83 permissions du cahier des charges (catégories A à F) plus **`cobblemon.
 ## Cartes
 JourneyMap (API v2, `PolygonOverlay`), Xaero's Minimap et Xaero's World Map (surlignage au bloc près) : territoires colorés par relation, infobulles au survol (nom, propriétaire, tag de clan), tracé de la WorldBorder. Les connecteurs ne se chargent que si la carte est installée.
 
+**Découverte** : un territoire n'est surligné que sur les chunks que le joueur a déjà chargés (même règle que l'exploration des cartes). Un claim jamais visité n'apparaît pas ; un claim visité en partie n'est dessiné que sur la partie explorée (découpe au chunk, avec trous si besoin), infobulles comprises. La limite du monde reste toujours tracée. L'exploration est retenue côté client par serveur et par dimension (`cobblepulse_claims/discovery/`). Désactivable dans `config.json` : `sync.map_discovery_required` (true par défaut).
+
 ## Tests automatiques (GitHub Actions)
 À chaque push : compilation, auto-tests sur un vrai serveur (Cobblemon 1.8.4, LuckPerms, Clans, Ranch) sur deux démarrages, puis un vrai client avec JourneyMap et les cartes de Xaero. Résultats, captures et jar sur la branche `ci-output`.

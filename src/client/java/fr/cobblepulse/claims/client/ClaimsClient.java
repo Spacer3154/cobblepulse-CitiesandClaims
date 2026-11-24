@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mojang.blaze3d.platform.InputConstants;
 import fr.cobblepulse.claims.CobblePulseClaims;
+import fr.cobblepulse.claims.client.map.Discovery;
 import fr.cobblepulse.claims.client.map.MapBridge;
 import fr.cobblepulse.claims.client.render.ClaimWorldRenderer;
 import fr.cobblepulse.claims.client.screen.AdminClaimsHubScreen;
@@ -36,7 +37,8 @@ import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.lit
  */
 public final class ClaimsClient implements ClientModInitializer {
     public static KeyMapping CONTEXT_KEY;
-    private static int lastMapVersion = -1;
+    private static int lastMapVersion = -1, lastDiscovery;
+    private static long lastRefreshTick;
 
     @Override
     public void onInitializeClient() {
@@ -51,14 +53,23 @@ public final class ClaimsClient implements ClientModInitializer {
         ClientPlayNetworking.registerGlobalReceiver(Payloads.VisualPayload.TYPE, (p, ctx) -> ctx.client().execute(() -> ClientState.applyVisual(json(p.json()))));
         ClientPlayNetworking.registerGlobalReceiver(Payloads.OpenScreenPayload.TYPE, (p, ctx) -> ctx.client().execute(() -> openScreen(p.screen(), json(p.json()))));
         ClientPlayConnectionEvents.DISCONNECT.register((h, c) -> {
+            Discovery.disconnect();
             ClientState.reset();
             MapBridge.refresh();
         });
 
         ClientTickEvents.END_CLIENT_TICK.register(mc -> {
             while (CONTEXT_KEY.consumeClick()) pressContextKey(mc);
+            Discovery.tick(mc);
             if (ClientState.version != lastMapVersion) {
                 lastMapVersion = ClientState.version;
+                lastDiscovery = Discovery.mapVersion;
+                lastRefreshTick = mc.level == null ? 0 : mc.level.getGameTime();
+                MapBridge.refresh();
+            } else if (Discovery.mapVersion != lastDiscovery && mc.level != null && mc.level.getGameTime() - lastRefreshTick >= 40) {
+                // nouveaux chunks decouverts sur un territoire : redessin limite a une fois toutes les 2 s
+                lastDiscovery = Discovery.mapVersion;
+                lastRefreshTick = mc.level.getGameTime();
                 MapBridge.refresh();
             }
         });

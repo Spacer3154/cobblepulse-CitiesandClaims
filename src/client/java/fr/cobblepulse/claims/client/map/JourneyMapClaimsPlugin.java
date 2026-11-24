@@ -22,12 +22,15 @@ import java.util.List;
 
 /**
  * JourneyMap (API v2) : un PolygonOverlay par territoire (couleur par relation, infobulle au survol : nom, proprietaire,
- * tag de clan) et le trace de la WorldBorder, sur la minimap et la carte plein ecran.
+ * tag de clan) et le trace de la WorldBorder, sur la minimap et la carte plein ecran. Un territoire n'apparait que sur
+ * les chunks deja decouverts par le joueur (decoupe au chunk, avec trous si besoin).
  */
 @JourneyMapPlugin(apiVersion = "2.0.0")
 public class JourneyMapClaimsPlugin implements IClientPlugin {
     private static IClientAPI api;
     public static volatile int shown;
+    /** Territoires non dessines (aucun chunk decouvert) / dessines en partie. */
+    public static volatile int hidden, partial;
 
     @Override
     public void initialize(IClientAPI clientApi) {
@@ -49,25 +52,41 @@ public class JourneyMapClaimsPlugin implements IClientPlugin {
         if (api == null) return;
         api.removeAll(CobblePulseClaims.MOD_ID);
         shown = 0;
+        hidden = 0;
+        partial = 0;
         if (!ClientConfig.get().map_overlays || ClientState.dim == null || ClientState.dim.isEmpty()) return;
         ResourceKey<Level> dim = ResourceKey.create(Registries.DIMENSION, ResourceLocation.parse(ClientState.dim));
         List<ClientState.CClaim> claims = new ArrayList<>(ClientState.CLAIMS.values());
         claims.sort((a, b) -> Boolean.compare(a.isSub(), b.isSub()));
         for (ClientState.CClaim c : claims) {
-            MapPolygon poly = new MapPolygon(new BlockPos(c.minX, 64, c.minZ), new BlockPos(c.maxX + 1, 64, c.minZ),
-                    new BlockPos(c.maxX + 1, 64, c.maxZ + 1), new BlockPos(c.minX, 64, c.maxZ + 1));
-            int rgb = c.isSub() ? 0xFFFFFF : c.rgb();
-            ShapeProperties sp = new ShapeProperties().setStrokeColor(rgb).setStrokeOpacity(0.95f).setStrokeWidth(c.isSub() ? 1.5f : 2.5f)
-                    .setFillColor(rgb).setFillOpacity(c.isSub() ? 0.08f : 0.28f);
-            PolygonOverlay o = new PolygonOverlay(CobblePulseClaims.MOD_ID, dim, sp, poly);
-            o.setOverlayGroupName("CobblePulse — Territoires");
-            o.setTitle(String.join("\n", c.tooltip()));
-            if (ClientConfig.get().map_labels && !c.isSub()) {
-                o.setLabel(c.name);
-                o.setTextProperties(new TextProperties().setColor(rgb).setScale(1.2f).setBackgroundOpacity(0.4f).setOpacity(1f)
-                        .setActiveUIs(Context.UI.Fullscreen).setMinZoom(1));
+            // decouverte : seule la partie deja exploree par le joueur est dessinee
+            List<DiscoveredShape.Piece> pieces = DiscoveredShape.visible(c.minX, c.minZ, c.maxX, c.maxZ, Discovery::visible);
+            if (pieces.isEmpty()) {
+                hidden++;
+                continue;
             }
-            show(o);
+            boolean whole = pieces.size() == 1 && pieces.get(0).holes().isEmpty()
+                    && pieces.get(0).area() == (double) (c.maxX - c.minX + 1) * (c.maxZ - c.minZ + 1);
+            if (!whole) partial++;
+            DiscoveredShape.Piece largest = pieces.get(0);
+            for (DiscoveredShape.Piece pc : pieces) if (pc.area() > largest.area()) largest = pc;
+            int rgb = c.isSub() ? 0xFFFFFF : c.rgb();
+            for (DiscoveredShape.Piece pc : pieces) {
+                ShapeProperties sp = new ShapeProperties().setStrokeColor(rgb).setStrokeOpacity(0.95f).setStrokeWidth(c.isSub() ? 1.5f : 2.5f)
+                        .setFillColor(rgb).setFillOpacity(c.isSub() ? 0.08f : 0.28f);
+                List<MapPolygon> holes = new ArrayList<>();
+                for (DiscoveredShape.Loop h : pc.holes()) holes.add(polygon(h));
+                PolygonOverlay o = holes.isEmpty() ? new PolygonOverlay(CobblePulseClaims.MOD_ID, dim, sp, polygon(pc.outer()))
+                        : new PolygonOverlay(CobblePulseClaims.MOD_ID, dim, sp, polygon(pc.outer()), holes);
+                o.setOverlayGroupName("CobblePulse — Territoires");
+                o.setTitle(String.join("\n", c.tooltip()));
+                if (pc == largest && ClientConfig.get().map_labels && !c.isSub()) {
+                    o.setLabel(c.name);
+                    o.setTextProperties(new TextProperties().setColor(rgb).setScale(1.2f).setBackgroundOpacity(0.4f).setOpacity(1f)
+                            .setActiveUIs(Context.UI.Fullscreen).setMinZoom(1));
+                }
+                show(o);
+            }
         }
         ClientState.CBorder b = ClientState.border;
         if (b != null && b.enabled && ClientConfig.get().map_worldborder) {
@@ -91,6 +110,12 @@ public class JourneyMapClaimsPlugin implements IClientPlugin {
             o.setTitle("Limite du monde");
             show(o);
         }
+    }
+
+    private static MapPolygon polygon(DiscoveredShape.Loop l) {
+        List<BlockPos> pts = new ArrayList<>(l.xs().length);
+        for (int k = 0; k < l.xs().length; k++) pts.add(new BlockPos(l.xs()[k], 64, l.zs()[k]));
+        return new MapPolygon(pts);
     }
 
     private static void show(PolygonOverlay o) {

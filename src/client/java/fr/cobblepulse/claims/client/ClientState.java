@@ -139,6 +139,7 @@ public final class ClientState {
             dim = d;
             if (o.has("self")) self = UUID.fromString(o.get("self").getAsString());
             if (o.has("staff")) staff = o.get("staff").getAsBoolean();
+            fr.cobblepulse.claims.client.map.Discovery.required = !o.has("discovery") || o.get("discovery").getAsBoolean();
         } else if (d != null && !d.equals(dim)) {
             return;
         }

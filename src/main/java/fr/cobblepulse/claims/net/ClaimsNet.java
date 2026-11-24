@@ -167,8 +167,9 @@ public final class ClaimsNet {
         o.add("upsert", arr);
         o.addProperty("self", p.getUUID().toString());
         o.addProperty("staff", Perms.staff(p));
+        o.addProperty("discovery", fr.cobblepulse.claims.ClaimsConfig.get().sync.map_discovery_required);
         String json = GSON.toJson(o);
-        LAST_SYNC_HASH.put(p.getUUID(), (dim + arr).hashCode());
+        LAST_SYNC_HASH.put(p.getUUID(), (dim + arr + fr.cobblepulse.claims.ClaimsConfig.get().sync.map_discovery_required).hashCode());
         ServerPlayNetworking.send(p, new Payloads.ClaimsSyncPayload(json));
     }
 
@@ -179,7 +180,7 @@ public final class ClaimsNet {
         JsonArray arr = new JsonArray();
         for (Claim c : ClaimManager.all()) if (c.dimension.equals(dim)) arr.add(Views.summary(p, c));
         Integer last = LAST_SYNC_HASH.get(p.getUUID());
-        if (last == null || last != (dim + arr).hashCode()) sendFullSync(p);
+        if (last == null || last != (dim + arr + fr.cobblepulse.claims.ClaimsConfig.get().sync.map_discovery_required).hashCode()) sendFullSync(p);
     }
 
     private static void broadcastUpsert(Claim c) {
